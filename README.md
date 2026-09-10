@@ -161,4 +161,4 @@ npm run build
 
 ## 7. License
 
-MIT License. Designed and authored by Daniel Alvarez.
+MIT License. Designed and authored by Donato Alvarez.

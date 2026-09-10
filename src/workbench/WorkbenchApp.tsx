@@ -550,9 +550,9 @@ export function SecurityForm() {
             <div className="p-3 rounded-xl bg-[var(--bg-surface-raised)] border border-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
               <div className="flex items-center gap-1.5 text-[var(--text-primary)] font-semibold mb-1">
                 <Sparkles className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
-                <span>Zero VPS Architecture</span>
+                <span>Enterprise Design System</span>
               </div>
-              Runs 100% in-browser with automated axe-core accessibility unit tests.
+              Built with React 19, Tailwind v4, and automated axe-core accessibility tests.
             </div>
           </div>
         </aside>

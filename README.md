@@ -4,9 +4,9 @@
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-donatoalvarez.dev%2Faccessible--ui-6366f1.svg)](https://donatoalvarez.dev/accessible-ui/)
 [![WCAG 2.1 AA](https://img.shields.io/badge/WCAG-2.1%20AA%20Compliant-34d399.svg)](#wcag-21-aa-compliance-matrix)
 [![axe-core](https://img.shields.io/badge/axe--core-0%20Violations-38bdf8.svg)](https://github.com/dequelabs/axe-core)
-[![Zero VPS](https://img.shields.io/badge/Zero%20VPS-GitHub%20Pages-f59e0b.svg)](#zero-vps-architecture)
+[![License: MIT](https://img.shields.io/badge/License-MIT-f59e0b.svg)](#7-license)
 
-A production-grade, accessible enterprise component system and interactive workbench built with **React 19**, **TypeScript**, **Tailwind CSS v4**, **Vitest**, and **axe-core**. Engineered to demonstrate senior/staff-level UI infrastructure design, adherence to the official **W3C WAI-ARIA Authoring Practices Guide (APG)**, and zero-maintenance static deployment.
+A production-grade, accessible enterprise component system and interactive workbench built with **React 19**, **TypeScript**, **Tailwind CSS v4**, **Vitest**, and **axe-core**. Engineered to demonstrate senior/staff-level UI infrastructure design and strict adherence to the official **W3C WAI-ARIA Authoring Practices Guide (APG)**.
 
 ---
 
@@ -56,10 +56,10 @@ flowchart TB
         APG["Keyboard Traversal Matrix Verification"]
     end
 
-    subgraph Deployment ["Zero VPS Production Deployment"]
+    subgraph Deployment ["Production CI/CD & Deployment"]
         Vite["Vite 8 Static Bundle"]
         GHActions["GitHub Actions CI/CD"]
-        GHPages["GitHub Pages 100% Static Host"]
+        GHPages["GitHub Pages Showcase"]
     end
 
     Tokens --> Primitives
@@ -131,12 +131,10 @@ it('should have zero axe-core accessibility violations', async () => {
 
 ---
 
-## 6. Zero VPS Architecture & Deployment
+## 6. Production CI/CD & Deployment
 
-This project requires **zero VPS infrastructure, zero databases, and zero server maintenance**:
-* Runs **100% client-side** in modern browsers.
-* Builds into static HTML, CSS, and JS bundles via Vite.
-* Automatically deployed to **GitHub Pages** on every push to `main` through GitHub Actions.
+* Automated build and test pipeline on every push to `main` via GitHub Actions.
+* Deployed automatically to **GitHub Pages** as a static showcase and documentation workbench.
 
 ### Quick Start: Local Development
 ```bash

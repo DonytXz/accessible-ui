@@ -33,33 +33,33 @@ Enterprise web applications frequently break accessibility contracts:
 ```mermaid
 flowchart TB
     subgraph Core ["Design System Core Primitives"]
-        Tokens[Design Tokens & CSS Variables<br/>Theme, Spacing, Focus Rings, High Contrast]
-        Hooks[Headless A11y Hooks<br/>useFocusTrap, useAriaLive, useControllableState]
-        Primitives[Compound Accessible Primitives<br/>WAI-ARIA APG Compliant]
+        Tokens["Design Tokens & CSS Variables<br/>Theme, Spacing, Focus Rings, High Contrast"]
+        Hooks["Headless A11y Hooks<br/>useFocusTrap, useAriaLive, useControllableState"]
+        Primitives["Compound Accessible Primitives<br/>WAI-ARIA APG Compliant"]
     end
 
     subgraph Catalog ["Enterprise Component Catalog (9 Components)"]
-        C1[1. Virtualized Data Grid]
-        C2[2. Modal Dialog & Side Drawer]
-        C3[3. Global Command Palette Cmd+K]
-        C4[4. Multi-Select Combobox]
-        C5[5. Date-Range Calendar & Picker]
-        C6[6. Live Region Toast System]
-        C7[7. Keyboard Navigation Tabs]
-        C8[8. Anchored Popover & Tooltip]
-        C9[9. Accessible Form Controls]
+        C1["1. Virtualized Data Grid"]
+        C2["2. Modal Dialog & Side Drawer"]
+        C3["3. Global Command Palette Cmd+K"]
+        C4["4. Multi-Select Combobox"]
+        C5["5. Date-Range Calendar & Picker"]
+        C6["6. Live Region Toast System"]
+        C7["7. Keyboard Navigation Tabs"]
+        C8["8. Anchored Popover & Tooltip"]
+        C9["9. Accessible Form Controls"]
     end
 
     subgraph Quality ["Quality & Verification Gate"]
-        Vitest[Vitest Component Tests (38 Tests)]
-        AxeCore[axe-core Automated WCAG Rules]
-        APG[Keyboard Traversal Matrix Verification]
+        Vitest["Vitest Component Tests (38 Tests)"]
+        AxeCore["axe-core Automated WCAG Rules"]
+        APG["Keyboard Traversal Matrix Verification"]
     end
 
     subgraph Deployment ["Zero VPS Production Deployment"]
-        Vite[Vite 8 Static Bundle]
-        GHActions[GitHub Actions CI/CD]
-        GHPages[GitHub Pages 100% Static Host]
+        Vite["Vite 8 Static Bundle"]
+        GHActions["GitHub Actions CI/CD"]
+        GHPages["GitHub Pages 100% Static Host"]
     end
 
     Tokens --> Primitives

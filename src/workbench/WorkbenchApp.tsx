@@ -31,6 +31,7 @@ import { Tooltip } from '@/components/Tooltip/Tooltip'
 import { Popover } from '@/components/Tooltip/Popover'
 import { FormField, Input } from '@/components/Form/FormField'
 import { Switch } from '@/components/Form/Switch'
+import { ThemeSwitch, Theme } from '@/components/ThemeSwitch/ThemeSwitch'
 import { sampleServers, serverColumns, technologyOptions, ServerNode } from './mockData'
 
 type ComponentKey =
@@ -43,6 +44,7 @@ type ComponentKey =
   | 'tabs'
   | 'tooltip'
   | 'form'
+  | 'themeswitch'
 
 interface ComponentMetadata {
   id: ComponentKey
@@ -57,7 +59,13 @@ interface ComponentMetadata {
 
 export const WorkbenchApp: React.FC = () => {
   const [activeComponent, setActiveComponent] = useState<ComponentKey>('datagrid')
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme') as Theme | null
+      if (saved === 'light' || saved === 'dark') return saved
+    }
+    return 'light'
+  })
   const [isCmdKOpen, setIsCmdKOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<'preview' | 'a11y' | 'code'>('preview')
   const [copied, setCopied] = useState(false)
@@ -77,9 +85,12 @@ export const WorkbenchApp: React.FC = () => {
 
   const { toast } = useToast()
 
-  // Apply theme
+  // Apply theme and persist preference
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
+    try {
+      localStorage.setItem('theme', theme)
+    } catch (e) {}
   }, [theme])
 
   // Global Cmd+K hotkey
@@ -399,6 +410,40 @@ export function SecurityForm() {
   )
 }`,
     },
+    themeswitch: {
+      id: 'themeswitch',
+      title: 'Accessible Theme Switch',
+      category: 'Theme & Appearance',
+      icon: <Sun className="w-4 h-4" />,
+      description:
+        'WAI-ARIA Radio Group and Switch patterns for light and dark theme toggling with keyboard navigation, zero-flash persistence, and color-scheme synchronization.',
+      wcagCriteria: [
+        'WCAG 4.1.2 Name, Role, Value (role="radiogroup", role="radio", aria-checked="true|false", or role="switch")',
+        'WCAG 2.1.1 Keyboard (ArrowLeft/ArrowRight to cycle theme options, Space/Enter to toggle)',
+        'WCAG 2.4.7 Focus Visible (High-contrast focus ring conforming to non-text contrast requirements)',
+      ],
+      keyboardShortcuts: [
+        { key: 'ArrowLeft / ArrowRight', action: 'Traverse between Light and Dark mode options' },
+        { key: 'Space / Enter', action: 'Activate selected theme' },
+      ],
+      codeSnippet: `import { useState } from 'react'
+import { ThemeSwitch, Theme } from 'accessible-ui'
+
+export function AppHeader() {
+  const [theme, setTheme] = useState<Theme>('light')
+
+  return (
+    <header className="flex items-center justify-between p-4">
+      <h2>My App</h2>
+      {/* Segmented Radio Group Variant (Default) */}
+      <ThemeSwitch theme={theme} onChange={setTheme} variant="segmented" />
+
+      {/* Or Toggle Switch Variant */}
+      <ThemeSwitch theme={theme} onChange={setTheme} variant="toggle" />
+    </header>
+  )
+}`,
+    },
   }
 
   const currentMeta = catalog[activeComponent]
@@ -441,11 +486,32 @@ export function SecurityForm() {
       onSelect: () => setActiveComponent('toast'),
     },
     {
+      id: 'switch-themeswitch',
+      label: 'Switch to Theme Switch Component',
+      category: 'Navigation',
+      icon: <Sun className="w-4 h-4 text-amber-500" />,
+      onSelect: () => setActiveComponent('themeswitch'),
+    },
+    {
       id: 'toggle-theme',
-      label: `Switch Theme to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`,
+      label: `Toggle Theme (Currently ${theme === 'light' ? 'Light' : 'Dark'})`,
       category: 'Appearance',
       shortcut: 'Theme',
-      onSelect: () => setTheme((t) => (t === 'dark' ? 'light' : 'dark')),
+      onSelect: () => setTheme((t) => (t === 'light' ? 'dark' : 'light')),
+    },
+    {
+      id: 'set-theme-light',
+      label: 'Set Theme: Light',
+      category: 'Appearance',
+      icon: <Sun className="w-4 h-4 text-amber-500" />,
+      onSelect: () => setTheme('light'),
+    },
+    {
+      id: 'set-theme-dark',
+      label: 'Set Theme: Dark',
+      category: 'Appearance',
+      icon: <Moon className="w-4 h-4 text-sky-400" />,
+      onSelect: () => setTheme('dark'),
     },
     {
       id: 'run-toast-success',
@@ -504,14 +570,7 @@ export function SecurityForm() {
           </button>
 
           {/* Theme Switcher */}
-          <button
-            type="button"
-            onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            className="p-2 rounded-xl border border-[var(--border-strong)] bg-[var(--bg-surface-raised)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors focus-visible:outline-none"
-          >
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-sky-600" />}
-          </button>
+          <ThemeSwitch theme={theme} onChange={setTheme} />
         </div>
       </header>
 
@@ -945,6 +1004,37 @@ export function SecurityForm() {
                         checked={switchState}
                         onChange={setSwitchState}
                       />
+                    </div>
+                  </div>
+                )}
+
+                {activeComponent === 'themeswitch' && (
+                  <div className="max-w-md mx-auto w-full py-8 space-y-8 text-center">
+                    <div className="space-y-2">
+                      <h4 className="text-sm font-semibold text-[var(--text-primary)]">
+                        Active Theme: <span className="capitalize text-[var(--accent-primary)] font-bold">{theme}</span>
+                      </h4>
+                      <p className="text-xs text-[var(--text-secondary)]">
+                        Try both variants below or use the global switch in the top header. Preference is saved to localStorage.
+                      </p>
+                    </div>
+
+                    <div className="p-6 rounded-xl bg-[var(--bg-surface-raised)] border border-[var(--border-subtle)] space-y-4">
+                      <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+                        Segmented Radio Group (Header Variant)
+                      </div>
+                      <div className="flex justify-center">
+                        <ThemeSwitch theme={theme} onChange={setTheme} variant="segmented" />
+                      </div>
+                    </div>
+
+                    <div className="p-6 rounded-xl bg-[var(--bg-surface-raised)] border border-[var(--border-subtle)] space-y-4">
+                      <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+                        Accessible Toggle Switch Variant
+                      </div>
+                      <div className="flex justify-center">
+                        <ThemeSwitch theme={theme} onChange={setTheme} variant="toggle" />
+                      </div>
                     </div>
                   </div>
                 )}

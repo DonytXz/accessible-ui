@@ -38,7 +38,7 @@ flowchart TB
         Primitives["Compound Accessible Primitives<br/>WAI-ARIA APG Compliant"]
     end
 
-    subgraph Catalog ["Enterprise Component Catalog (9 Components)"]
+    subgraph Catalog ["Enterprise Component Catalog (10 Components)"]
         C1["1. Virtualized Data Grid"]
         C2["2. Modal Dialog & Side Drawer"]
         C3["3. Global Command Palette Cmd+K"]
@@ -48,10 +48,11 @@ flowchart TB
         C7["7. Keyboard Navigation Tabs"]
         C8["8. Anchored Popover & Tooltip"]
         C9["9. Accessible Form Controls"]
+        C10["10. Accessible Theme Switch"]
     end
 
     subgraph Quality ["Quality & Verification Gate"]
-        Vitest["Vitest Component Tests (38 Tests)"]
+        Vitest["Vitest Component Tests (44 Tests)"]
         AxeCore["axe-core Automated WCAG Rules"]
         APG["Keyboard Traversal Matrix Verification"]
     end
@@ -85,6 +86,7 @@ flowchart TB
 | **Keyboard Tabs** | `role="tablist"`<br/>`role="tab"`<br/>`role="tabpanel"` | `ArrowLeft`/`Right` (horizontal)<br/>`ArrowUp`/`Down` (vertical)<br/>`Home`/`End` (boundaries) | Connected `aria-controls` and `aria-labelledby`, automatic or manual activation modes, active pill indicator. |
 | **Tooltip & Popover** | `role="tooltip"` (`aria-describedby`)<br/>`role="dialog"` | `Tab` (shows on focus)<br/>`Escape` (dismiss without blur) | Safe hover polygon delay, viewport boundary collision detection, non-modal dialog popovers. |
 | **Accessible Form Controls** | `<label htmlFor="...">`<br/>`aria-invalid="true"`<br/>`role="switch"` | `Space` / `Enter` (toggle switch)<br/>`Tab` (navigate inputs) | Dynamic error message association via `aria-errormessage`, high-contrast WCAG 2.4.7 focus visible rings. |
+| **Theme Switch** | `role="radiogroup"` / `role="radio"`<br/>`role="switch"` (`variant="toggle"`) | `ArrowLeft`/`Right` (segmented)<br/>`Space` / `Enter` (toggle) | Anti-FOUC inline hydration script, `color-scheme` CSS sync, dual accessible variants, `localStorage` persistence. |
 
 ---
 
@@ -107,7 +109,7 @@ flowchart TB
 
 ## 5. Automated Testing & Verification
 
-The repository runs 38 unit and accessibility tests across all components using Vitest, React Testing Library, and `axe-core`:
+The repository runs 44 unit and accessibility tests across all components using Vitest, React Testing Library, and `axe-core`:
 
 ```bash
 # Run complete test suite with axe-core audits

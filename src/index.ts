@@ -17,3 +17,4 @@ export { Tooltip, type TooltipProps, type TooltipPlacement } from './components/
 export { Popover, type PopoverProps } from './components/Tooltip/Popover'
 export { FormField, Input, type FormFieldProps, type InputProps } from './components/Form/FormField'
 export { Switch, type SwitchProps } from './components/Form/Switch'
+export { ThemeSwitch, type ThemeSwitchProps, type Theme } from './components/ThemeSwitch/ThemeSwitch'
